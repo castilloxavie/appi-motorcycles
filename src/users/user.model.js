@@ -10,7 +10,7 @@ const Users = sequelize.define("users",{
         type: DataTypes.INTEGER,
         field: "Use_Id"
     },
-    ame: {
+    name: {
         type: DataTypes.STRING(50),
         allowNull: false
     },
@@ -28,9 +28,9 @@ const Users = sequelize.define("users",{
         allowNull: false
     },
     status: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.ENUM("available", "not available"),
         allowNull: false,
-        defaultValue: true,
+        defaultValue: "available",
     }
 })
 

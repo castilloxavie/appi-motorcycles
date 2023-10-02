@@ -9,7 +9,7 @@ pick them up*
 ```sh
 npm init -y
 npm i express
-npm i -Dnodemon
+npm i -D nodemon
 docker-compose up
 npm i env-var
 npm i dotenv

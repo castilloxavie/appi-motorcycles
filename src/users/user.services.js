@@ -9,7 +9,7 @@ export class UseService {
     async findAllUser(){
         return await Users.findAll({
             where: {
-                status: true
+                status: "available"
             }
         })
     }
@@ -18,7 +18,7 @@ export class UseService {
         return await Users.findOne({
             where: {
                 id,
-                status: true
+                status: "available"
             }
         })
     }
@@ -28,7 +28,7 @@ export class UseService {
     }
 
     async deleteUser(user){
-        return await user.update({status:false})
+        return await user.update({status:"not available"})
     }
 
 }

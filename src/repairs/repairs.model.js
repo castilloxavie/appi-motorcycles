@@ -15,9 +15,9 @@ const Repairs = sequelize.define("repairs",{
         allowNull: false
     },
     status: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.ENUM("pending", "completed", "cancelled"),
         allowNull: false,
-        defaultValue: true
+        defaultValue: "pending",
     },
     userId: {
         type: DataTypes.INTEGER
