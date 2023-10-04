@@ -23,8 +23,8 @@ export class RepairsServices {
         })
     }
 
-    async updateRepair(repair, data){
-        return await repair.update(data)
+    async updateRepair(repair){
+        return await repair.update({status:"completed"})
     }
 
 
