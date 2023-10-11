@@ -15,6 +15,7 @@ npm i env-var
 npm i dotenv
 npm i sequelize
 npm i pg pg-hstore
+npm i zod
 ```
 
 ###  Endpoints Users and Repairs

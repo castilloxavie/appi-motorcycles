@@ -24,7 +24,7 @@ const Users = sequelize.define("users",{
         allowNull: false
     },
     role: {
-        type: DataTypes.STRING(20),
+        type:DataTypes.ENUM("client", "employee"),
         allowNull: false
     },
     status: {

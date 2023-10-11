@@ -1,3 +1,4 @@
+import{ validatePartialUser, validateUser } from "./user.schema.js"
 import { UseService } from "./user.services.js";
 
 const useService = new UseService();
@@ -13,7 +14,16 @@ export const findAllUsers = async (req, res) => {
 
 export const createUser = async (req, res) => {
     try {
-        const user = await useService.createUser(req.body);
+        const{hasError, errorMessages, userData} = validateUser(req.body)
+
+        if (hasError) {
+            return res.status(422).json({
+                status: "error",
+                message: errorMessages,
+            });
+        }
+
+        const user = await useService.createUser(userData);
         
         return res.status(201).json(user);
     } catch (error) {
@@ -23,17 +33,9 @@ export const createUser = async (req, res) => {
 
 export const findOneUser = async (req, res) => {
     try {
-        const { id } = req.params;
-        const user = await useService.findOneUser(id);
+        const{user}= req;
 
-        if (!user) {
-            return res.status(404).json({
-                status: "error",
-                message: `User with id: ${id} no found`,
-            });
-        }
-
-        return res.json(user);
+        return res.status(200).json(user);
     } catch (error) {
         return res.status(500).json(error);
     }
@@ -41,6 +43,15 @@ export const findOneUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     try {
+        const {hasError, errorMessages, userData} =validatePartialUser(req.body)
+
+        if(hasError){
+            return res.status(422).json({
+                status: "error",
+                message: errorMessages,
+            });
+        }
+
         const { id } = req.params;
         const user = await useService.findOneUser(id);
 
@@ -51,7 +62,7 @@ export const updateUser = async (req, res) => {
             });
         }
 
-        const updateUser = await useService.updateUser(user, req.body);
+        const updateUser = await useService.updateUser(user, userData);
         return res.json(updateUser);
     } catch (error) {
         return res.status(500).json(error);
@@ -60,19 +71,11 @@ export const updateUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
     try {
-        const { id } = req.params;
-
-        const user = await useService.findOneUser(id);
-
-        if (!user) {
-            return res.status(404).json({
-                status: "error",
-                message: `User with id: ${id} no found`,
-            });
-        }
+        const{user} = req
+        
         await useService.deleteUser(user);
-
         return res.status(204).json(null)
+
     } catch (error) {
         return res.status(500).json(error)
     }

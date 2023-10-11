@@ -14,6 +14,14 @@ const Repairs = sequelize.define("repairs",{
         type: DataTypes.DATE,
         allowNull: false
     },
+    motorsNumber:{
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    description: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
     status: {
         type: DataTypes.ENUM("pending", "completed", "cancelled"),
         allowNull: false,
@@ -22,6 +30,7 @@ const Repairs = sequelize.define("repairs",{
     userId: {
         type: DataTypes.INTEGER
     }
+    
 
 })
 

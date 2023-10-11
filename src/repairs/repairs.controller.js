@@ -1,10 +1,22 @@
+import { validatePartialRepair, validateRepair } from "./repairs.schema.js";
 import { RepairsServices } from "./repairs.services.js";
 
 const repairsServices = new RepairsServices();
 
 export const createRepair = async (req, res) => {
     try {
-        const repair = await repairsServices.createRepair(req.body);
+        const { hasError, errorMessages, repairData } = validateRepair(
+            req.body
+        );
+
+        if (hasError) {
+            return res.status(422).json({
+                status: "error",
+                message: errorMessages,
+            });
+        }
+
+        const repair = await repairsServices.createRepair(repairData);
         return res.status(201).json(repair);
     } catch (error) {
         return res.status(500).json(error);
@@ -22,6 +34,28 @@ export const findAllRepairs = async (req, res) => {
 
 export const findOnerepair = async (req, res) => {
     try {
+        
+        const {repairs} =req
+
+        return res.json(repairs);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+};
+
+export const updateRepair = async (req, res) => {
+    try {
+        const { hasError, errorMessages, repairData } = validatePartialRepair(
+            req.body
+        );
+
+        if(hasError){
+            return res.status(422).json({
+                status: "error",
+                message: errorMessages,
+            });
+        }
+
         const { id } = req.params;
         const repair = await repairsServices.findOnerepair(id);
 
@@ -32,29 +66,12 @@ export const findOnerepair = async (req, res) => {
             });
         }
 
-        return res.json(repair);
-    } catch (error) {
-        return res.status(500).json(error);
-    }
-};
-
-export const updateRepair = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const repair = await repairsServices.findOnerepair(id);
-
-        if (!repair) {
-            return res.status(404).jso({
-                status: "error",
-                message: `Repairs with id: ${id} no found`,
-            });
-        }
-
-        const updateRepair = await repairsServices.updateRepair(
+       
+        const updatesRepair = await repairsServices.updateRepair(
             repair,
-            req.body
+            repairData
         );
-        return res.json(updateRepair);
+        return res.json(updatesRepair);
     } catch (error) {
         return res.status(500).json(error);
     }
@@ -76,6 +93,6 @@ export const deleteRepair = async (req, res) => {
 
         return res.status(204).json(null);
     } catch (error) {
-        return res.status(500).json(error)
+        return res.status(500).json(error);
     }
 };
