@@ -47,7 +47,7 @@ export const updateRepair = catchAsync(async (req, res) => {
     if (!repair) {
         return res.status(404).json({
             status: "error",
-            message: `Repairs with id: ${id} no found`,
+            message: `Repairs with id: ${id} no found for update`,
         });
         
     }

@@ -7,11 +7,7 @@ export class RepairsServices {
     }
 
     async findAllrepairs(){
-        return await Repairs.findAll({
-            where: {
-                status: "pending"
-            }
-        })
+        return await Repairs.findAll()
     }
 
     async findOnerepair(id){

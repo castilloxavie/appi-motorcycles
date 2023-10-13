@@ -7,11 +7,7 @@ export class UseService {
     }
 
     async findAllUser(){
-        return await Users.findAll({
-            where: {
-                status: "available"
-            }
-        })
+        return await Users.findAll()
     }
 
     async findOneUser(id){
