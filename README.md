@@ -16,7 +16,14 @@ npm i dotenv
 npm i sequelize
 npm i pg pg-hstore
 npm i zod
+npm i morgan
 ```
+
+
+
+
+
+
 
 ###  Endpoints Users and Repairs
 #### Users

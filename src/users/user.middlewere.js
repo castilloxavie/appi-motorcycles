@@ -1,19 +1,17 @@
+import { catchAsync, AppError } from "../error/index.js"
 import {UseService} from "./user.services.js"
 
 const userServices = new UseService()
 
-export const validateExistUser  = async(req, res, next) =>{
+export const validateExistUser  = catchAsync(async(req, res, next) =>{
     const {id} = req.params
 
     const user = await userServices.findOneUser(id)
 
     if (!user) {
-            return res.status(404).json({
-                status: "error",
-                message: `User with id: ${id} no found`,
-            });
+        return next(new AppError(`User not found with id: ${ id }`, 404))
     }
     req.user = user
     next()
     
-} 
+})
