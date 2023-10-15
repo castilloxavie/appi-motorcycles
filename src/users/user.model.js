@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 
 import sequelize from "../config/database/database.js";
+import { encrytedPassword } from "../config/plugins/ecriptedPasswordPlugins.js";
 
 const Users = sequelize.define("users",{
     id: {
@@ -20,7 +21,7 @@ const Users = sequelize.define("users",{
         unique: true,
     },
     password: {
-        type:DataTypes.STRING(20),
+        type:DataTypes.STRING(255),
         allowNull: false
     },
     role: {
@@ -31,6 +32,12 @@ const Users = sequelize.define("users",{
         type: DataTypes.ENUM("available", "not available"),
         allowNull: false,
         defaultValue: "available",
+    }
+}, {
+    hooks: {
+        beforeCreate: async (user) => {
+            user.password = await encrytedPassword(user.password)
+        }
     }
 })
 

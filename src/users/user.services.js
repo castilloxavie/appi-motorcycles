@@ -10,7 +10,16 @@ export class UseService {
         return await Users.findAll()
     }
 
-    async findOneUser(id){
+    async findOneUser(email){
+        return await Users.findOne({
+            where: {
+                email,
+                status: "available"
+            }
+        })
+    }
+
+    async findOneUserId(id){
         return await Users.findOne({
             where: {
                 id,

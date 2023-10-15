@@ -10,6 +10,17 @@ const handleCastErrer23505 = () => {
     return new AppError("duplicate field value: please use another value", 400)
 }
 
+const handleJWTExpiedError = () => 
+    new AppError("your token has expired! please login again", 401)
+
+const handleJWTError = () => {
+    return AppError("invalid token. Plase login again", 401)
+}
+
+const handleCastErrer22P02 = () => 
+    new AppError("invalid type in database", 400)
+
+
 const sendErrorDev = (err, res) => {
     return res.status(err.statusCode).json({
       status: err.status,
@@ -52,6 +63,9 @@ export const globalErrorHandler = (err, req, res, next)=> {
         let error = err
         if(err.parent?.code === '22001') error = handlerCastError22001()
         if(err.parent?.code === '23505') error = handleCastErrer23505()
+        if(err.parent?.code === '22P02') error = handleCastErrer22P02()
+        if(err.name === "TokenExpiredError") error = handleJWTExpiedError()
+        if(err.name === "JsonWebTokenError") error = handleJWTError()
 
         sendErrorPro(error, res)
     }
