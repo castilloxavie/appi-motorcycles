@@ -1,6 +1,6 @@
+import { AppError, catchAsync } from "../error/index.js";
 import { validatePartialRepair, validateRepair } from "./repairs.schema.js";
 import { RepairsServices } from "./repairs.services.js";
-import { catchAsync, AppError } from "../error/index.js";
 
 const repairsServices = new RepairsServices();
 
@@ -19,7 +19,7 @@ export const createRepair = catchAsync(async (req, res) => {
 });
 
 export const findAllRepairs = catchAsync(async (req, res) => {
-    const repair = await repairsServices.findAllrepairs();
+    const repair = await repairsServices.fiendAllWithAllUser();
     return res.json(repair);
 });
 
