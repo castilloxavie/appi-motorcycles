@@ -25,6 +25,7 @@ npm i perfect-express-sanitizer
 npm i hpp
 npm i helmet
 npm i express-rate-limit
+npm i --save express-validator
 npm run dev
 ```
 

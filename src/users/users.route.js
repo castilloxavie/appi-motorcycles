@@ -8,7 +8,7 @@ export const router = Router();
 
 
 router.post("/login", login)
-router.post("/register", proctect, validateRegisterUser, checkValidationResult, register)
+router.post("/register",proctect, validateRegisterUser, checkValidationResult, register)
 
 router.route("/").get(findAllUsers);
 router

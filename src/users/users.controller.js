@@ -105,7 +105,7 @@ export const updateUser = catchAsync(async (req, res) => {
     }
 
     const { id } = req.params;
-    const user = await useService.findOneUser(id);
+    const user = await useService.findOneUserId(id);
 
     if (!user) {
         return res.status(404).json({
