@@ -1,8 +1,8 @@
 import { Router } from "express";
 
+import { checkValidationResult, validateRegisterUser } from "../config/plugins/expressValidateUser.js";
 import { proctect, protectAccount, validateExistUser } from "./user.middlewere.js"
 import { deleteUser, findAllUsers, findOneUser, login, register, updateUser } from "./users.controller.js";
-import { checkValidationResult, validateRegisterUser } from "../config/plugins/expressValidateUser.js";
 
 export const router = Router();
 
@@ -14,7 +14,7 @@ router.route("/").get(findAllUsers);
 router
     .route("/:id")
     .get(validateExistUser, findOneUser)
-    .patch(updateUser)
+    .patch(protectAccount, updateUser)
     .delete(proctect, validateExistUser, protectAccount, deleteUser);
 
 
